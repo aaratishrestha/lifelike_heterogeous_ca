@@ -1,0 +1,48 @@
+no_of_experiments: 1
+file_locations:
+
+# 5 units of energy
+# - /Users/a02065/masters/thesis/experiments/with_energy/100*100_10K/mut0.02_elighneigh0.125_energyunit_5_movies/amax10_adec13/globals.py
+# - /Users/a02065/masters/thesis/experiments/with_energy/100*100_10K/mut0.02_elighneigh0.125_energyunit_5_movies/amax10_adec15/globals.py
+# - /Users/a02065/masters/thesis/experiments/with_energy/100*100_10K/mut0.02_elighneigh0.125_energyunit_5_movies/amax10_adec30/globals.py
+# - /Users/a02065/masters/thesis/experiments/with_energy/100*100_10K/mut0.02_elighneigh0.125_energyunit_5_movies/amax10_adec40/globals.py
+# - /Users/a02065/masters/thesis/experiments/with_energy/100*100_10K/mut0.02_elighneigh0.125_energyunit_5_movies/amax10_adec50/globals.py
+# - /Users/a02065/masters/thesis/experiments/with_energy/100*100_10K/mut0.02_elighneigh0.125_energyunit_5_movies/amax10_adec100/globals.py
+
+
+# # 7 units of energy
+# - /Users/a02065/masters/thesis/experiments/with_energy/100*100_10K/mut0.02_elighneigh0.125_energyunit_7_movies/amax10_adec13/globals.py
+# - /Users/a02065/masters/thesis/experiments/with_energy/100*100_10K/mut0.02_elighneigh0.125_energyunit_7_movies/amax10_adec15/globals.py
+# - /Users/a02065/masters/thesis/experiments/with_energy/100*100_10K/mut0.02_elighneigh0.125_energyunit_7_movies/amax10_adec30/globals.py
+# - /Users/a02065/masters/thesis/experiments/with_energy/100*100_10K/mut0.02_elighneigh0.125_energyunit_7_movies/amax10_adec40/globals.py
+# - /Users/a02065/masters/thesis/experiments/with_energy/100*100_10K/mut0.02_elighneigh0.125_energyunit_7_movies/amax10_adec50/globals.py
+# - /Users/a02065/masters/thesis/experiments/with_energy/100*100_10K/mut0.02_elighneigh0.125_energyunit_7_movies/amax10_adec100/globals.py
+
+# # 10 units of energy
+# - /Users/a02065/masters/thesis/experiments/with_energy/100*100_10K/mut0.02_elighneigh0.125_energyunit_10_movies/amax10_adec13/globals.py
+# - /Users/a02065/masters/thesis/experiments/with_energy/100*100_10K/mut0.02_elighneigh0.125_energyunit_10_movies/amax10_adec15/globals.py
+# - /Users/a02065/masters/thesis/experiments/with_energy/100*100_10K/mut0.02_elighneigh0.125_energyunit_10_movies/amax10_adec30/globals.py
+# - /Users/a02065/masters/thesis/experiments/with_energy/100*100_10K/mut0.02_elighneigh0.125_energyunit_10_movies/amax10_adec40/globals.py
+# - /Users/a02065/masters/thesis/experiments/with_energy/100*100_10K/mut0.02_elighneigh0.125_energyunit_10_movies/amax10_adec50/globals.py
+# - /Users/a02065/masters/thesis/experiments/with_energy/100*100_10K/mut0.02_elighneigh0.125_energyunit_10_movies/amax10_adec100/globals.py
+
+# # 25 units of energy
+# - /Users/a02065/masters/thesis/experiments/with_energy/100*100_10K/mut0.02_elighneigh0.125_energyunit_25_movies/amax10_adec13/globals.py
+# - /Users/a02065/masters/thesis/experiments/with_energy/100*100_10K/mut0.02_elighneigh0.125_energyunit_25_movies/amax10_adec15/globals.py
+# - /Users/a02065/masters/thesis/experiments/with_energy/100*100_10K/mut0.02_elighneigh0.125_energyunit_25_movies/amax10_adec30/globals.py
+# - /Users/a02065/masters/thesis/experiments/with_energy/100*100_10K/mut0.02_elighneigh0.125_energyunit_25_movies/amax10_adec40/globals.py
+# - /Users/a02065/masters/thesis/experiments/with_energy/100*100_10K/mut0.02_elighneigh0.125_energyunit_25_movies/amax10_adec50/globals.py
+# - /Users/a02065/masters/thesis/experiments/with_energy/100*100_10K/mut0.02_elighneigh0.125_energyunit_25_movies/amax10_adec100/globals.py
+- /Users/a02065/masters/thesis/experiments/with_energy/100*100_10K/mut0.02_elighneigh0.125_energyunit_25_movies/amax10_adec125/globals.py
+# - /Users/a02065/masters/thesis/experiments/with_energy/100*100_10K/mut0.02_elighneigh0.125_energyunit_25_movies/amax10_adec150/globals.py
+# - /Users/a02065/masters/thesis/experiments/with_energy/100*100_10K/mut0.02_elighneigh0.125_energyunit_25_movies/amax10_adec175/globals.py
+
+# - /Users/a02065/masters/thesis/experiments/without_energy/500*500_1K/mut0.02_elighneigh0.125/amax10_adec45/globals.py
+
+
+
+
+
+
+
+
