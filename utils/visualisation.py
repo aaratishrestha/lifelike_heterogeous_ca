@@ -1,10 +1,7 @@
-import subprocess
 from utils import globals
-import random
 import numpy as np
-import random
 from PIL import Image
-from PIL import Image, ImageDraw, ImageFont 
+from PIL import Image
 import os
 import pandas as pd
 import ast
@@ -12,60 +9,6 @@ from datetime import datetime
 from moviepy.editor import ImageSequenceClip
 
 
-
-'''
-    This function creates a collage of animated GIFs. 
-    It takes a parameter rule_type to determine the type of rules used for the collage.
-'''
-def create_animation_collage(params, animation_dir):
-
-
-    # Define the dimensions of each GIF
-    width, height = globals.GRID_SIZE, globals.GRID_SIZE
-    rule = params['cell_rules']
-    state = params['cell_states'] 
-    grid = params['grid_states'] 
-    output_collage = animation_dir  + "/" + globals.ANIM_COLLAGE 
-
-    # Use ffmpeg to resize the input GIFs and add captions
-    subprocess.call(['ffmpeg',
-                    '-i', rule,
-                    '-vf', f'scale={width}:{height}, pad=iw+20:ih+20:10:10:black', #,drawtext=fontfile=Arial.ttf: text=Rule: fontcolor=white: fontsize=8: x=0: y=0
-                    rule[:-4] + '_resized.gif'])
-
-    subprocess.call(['ffmpeg',
-                    '-i', state,
-                    '-vf', f'scale={width}:{height}, pad=iw+20:ih+20:10:10:black', #,drawtext=fontfile=Arial.ttf: text=State: fontcolor=white: fontsize=8: x=0: y=0 
-                    state[:-4] + '_resized.gif'])
-    
-    subprocess.call(['ffmpeg',
-                    '-i', grid,
-                    '-vf', f'scale={width}:{height}, pad=iw+20:ih+20:10:10:black', #,drawtext=fontfile=Arial.ttf: text=Grid: fontcolor=white: fontsize=8: x=0: y=0 
-                    grid[:-4] + '_resized.gif'])
-
-    # Use ffmpeg to create the collage of GIFs
-    subprocess.call(['ffmpeg',
-                    '-i', rule[:-4] + '_resized.gif',
-                    '-i', state[:-4] + '_resized.gif',
-                    # '-i', grid[:-4] + '_resized.gif',
-                    '-i', grid[:-4] + '_resized.gif',
-                    '-filter_complex', f'[0:v][1:v][2:v]hstack=3',
-                    '-r', '30',
-                    '-loop', '0',
-                    '-y', output_collage])
-
-    # Delete the resized input GIFs
-    subprocess.call(['rm',
-                    rule[:-4] + '_resized.gif'])
-
-    subprocess.call(['rm',
-                    state[:-4] + '_resized.gif'])
-
-    subprocess.call(['rm',
-                    grid[:-4] + '_resized.gif'])
-    
-    # subprocess.call(['rm',
-    #                 state_and_age[:-4] + '_resized.gif'])
 
 '''
     Assign a green color shade based on the age value.
@@ -154,29 +97,11 @@ def create_gridstate_images(main_dir, grids, cell_states):
     # create_image_collage(main_dir, 'grid_states_images', images)
     return images
 
-
-def create_animation(anim_file_name, images):
-    images[0].save(anim_file_name, save_all=True, append_images=images[1:], duration=globals.DURATION, loop=0)
-
 def create_movie(imagelist: list, dir: str):
     imagelist = [np.array(img) for img in imagelist]
     fps =globals.FPS if globals.FPS else 250
     clip = ImageSequenceClip(imagelist, fps=fps)
     clip.write_videofile(dir , codec='libx264')
-
-
-def create_image_with_text(image_width, image_height, text):
-    blank_image = Image.new('RGB', (40, 10), 'white')
-    draw = ImageDraw.Draw(blank_image)
-    text = 'Hellow'
-    text_color = (0, 0, 0)
-    font_path = "utils/Arial.ttf"
-    font = ImageFont.truetype(font_path, 10)
-    # Calculate the text size
-    text_width, text_height = draw.textsize(text, font)
-    x = (image_width - text_width) / 2
-    y = (image_height - text_height) / 2
-    draw.text((x, y), text, fill=text_color, font=font)
 
 
 def create_image_collage_of_each_ca_properties(main_dir: str, imagelist: list):
@@ -242,58 +167,6 @@ def save_images(dir,sub_dir, images):
         image.save(output_image_path)
 
 
-'''
-    create image with color details and captions, then concat the image with the gif frames.
-'''
-def concat_image_and_caption(color_meaning, images):
-    width, height = images[0].size
-    caption_image = create_custom_images(color_meaning, width, height)
-    concat_images = []
-    for im in images:
-        concatenated_image = Image.new('RGB', (im.width,  im.height + caption_image.height))
-
-        # Paste the first image at the top
-        concatenated_image.paste(im, (0, 0))
-
-        # Paste the second image below the first image
-        concatenated_image.paste(caption_image, (0, im.height))
-
-        concat_images.append(concatenated_image)
-    return  concat_images
-
-
-def create_custom_images(text_detail, w, h):
-
-    # Create a blank image with a white background
-    width, height = w, int(h/2)
-    background_color = (255, 255, 255)  # White color in RGB format
-    image = Image.new("RGB", (width, height), background_color)
-
-    # Load a font (change the font path to your desired font file)
-    font_path = "utils/Arial.ttf"
-    font_size = int(w/10) if w >= 100 else int(w/5)
-    font_color = (0, 0, 0)  # Black color in RGB format
-    font = ImageFont.truetype(font_path, font_size)
-
-    # Create a drawing context
-    draw = ImageDraw.Draw(image)
-
-    # Calculate the text size and position it in the center
-    x = 1
-    y = 1
-
-    # Iterate through the JSON object and add each key-value pair as a separate line of text
-    for key, value in text_detail.items():
-        text = f"{value}" if key == 'Caption' else f"{key}: {value}"
-        draw.text((x, y), text, font=font, fill=font_color)
-        if w < 100:
-            break
-        y += font_size + 1  # Adjust the vertical position for the next line
-
-    # Save the image to a file
-    return image
-
-
 def safe_eval(element):
     return ast.literal_eval(element)
 
@@ -317,19 +190,16 @@ def visual_result(properties_dict: dict, param: dict):
     print("Start - Cell State Animation Creation")
     cellstate_images = create_cellstate_images(dir, cell_states, cell_age, param['amax'])
     # create_movie(cellstate_images, cellstate_dir)
-    # create_animation(cellstate_dir, cellstate_images)
     print("Complete - Cell State Animation Creation")
    
     print("Start - Cell Grid Animation Creation")
     grid_images = create_gridstate_images(dir, grid, cell_states)
     # create_movie(grid_images, gridstate_dir)
-    # create_animation(gridstate_dir, grid_images)
     print("Complete - Cell Grid Animation Creation")
 
     print("Start - Cell Rule Animation Creation")
     cellrule_images = create_cellrule_images(dir,cell_rules)
     # create_movie(cellrule_images, cellrule_dir)
-    # create_animation(cellrule_dir, cellrule_images)
     print("Complete - Cell Rule Animation Creation")
 
     image_tuples = [list(t) for t in zip(cellrule_images, cellstate_images, grid_images)]

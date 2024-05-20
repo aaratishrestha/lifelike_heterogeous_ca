@@ -8,18 +8,15 @@ with three cell states: alive, decay, and quiescent.
 import numpy as np
 import random
 import copy
-# import pandas as pd
 
 class LLCA:
 
     '''
-        Initializes the LLCA object. It sets the initial grid_state, cell rules, cell ages, 
-        and cell states based on the specified rule_type. 
+        Initializes the LLCA object. It sets the initial grid_state, cell rules, cell ages, cell energy
+        and cell states. 
         It also initializes other parameters and variables used in the simulation.
 
-        param is a dictionary where we can pass values as desired.
-        The default value for param is None, which means it can be omitted when calling the function.
-        If omitted, it will use a value from the global scope.
+        param is a dictionary where different predefined configuration are passed.
     '''
 
     def __init__(self, param):
@@ -103,7 +100,7 @@ class LLCA:
             (grid_val == 1) & (np.isin(no_of_neighs, S))) else 0
 
     '''
-        Performs one iteration of the LLCA simulation. 
+        Performs iterations of the LLCA simulation. 
         It updates the grid_state, cell rules, cell ages, and cell states based on the current state and the applied rules.
     '''
 
@@ -127,23 +124,19 @@ class LLCA:
                             random.uniform(0, 1), 1)
                         
                         if select_eligible_neighbour <= self.probability_to_get_neighbour_genome:
-                            # select eligible neighbour
-                            neigh_index = random.choice(eligible_neighbours)
-                            # Transfer rules
+                            neigh_index = random.choice(eligible_neighbours) # select eligible neighbour
                             next_cell_rules[i][j] = self.cell_rules[neigh_index[0]
-                                                                    ][neigh_index[1]]
+                                                                    ][neigh_index[1]] # Transfer rules(without mutation)
 
-                            mutation_choice = round(random.uniform(0, 1 + 1e-10), 5)  # mutate rule
+                             # mutate rule
+                            mutation_choice = round(random.uniform(0, 1 + 1e-10), 5) 
                             if mutation_choice != 0 and mutation_choice <= self.mutation_rate:
                                 a = self.mutate_rule(next_cell_rules[i][j])
                                 next_cell_rules[i][j] = a
-
-                            # Change cell state to living
-                            next_cell_states[i][j] = 'a'
+                            
+                            next_cell_states[i][j] = 'a' # Change cell state to living
                             next_cell_ages[i][j] = 1  # reset age to 0
                             next_cell_energy[i][j] = 0
-
-
 
                 elif (state == 'd'):
                     if next_cell_energy[i][j] > 0:

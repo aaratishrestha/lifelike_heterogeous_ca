@@ -1,25 +1,24 @@
 ########################### GOL WITH CELL THREE STATES: ALIVE, DECAY AND QUIESCENT      #####################
 
 import copy
-from utils import animation
+from utils import visualisation
 from utils import globals
 import life_like_ca as ca
 import os
 from datetime import datetime
 import numpy as np
-import argparse
-import pandas as pd
-from utils import analyse_results as analyse
 from os import system
-import importlib
 
 RESULT_DIR = './animation'
 
 
-def get_eligible_cell_indices_to_get_energy(cell_states: np.ndarray, grid_states: np.ndarray, prefered_living_state: int, distribution_ratio: float):
+def get_eligible_cell_indices_to_get_energy(cell_states: np.ndarray, 
+                                            grid_states: np.ndarray, 
+                                            prefered_living_state: int, 
+                                            distribution_ratio: float):
+    
     eligible_mask = (grid_states == prefered_living_state) & (
         cell_states == 'a')
-    
     num_of_elements_for_energy = int(
         distribution_ratio * np.sum(eligible_mask))
     eligible_indices = np.argwhere(eligible_mask)
@@ -213,82 +212,17 @@ def set_default_parameters(other_params=None):
 
     return param
 
-
-def copy_file(source, destination):
-    with open(source, 'r') as source_file:
-        source_code = source_file.read()
-    with open(destination, 'w') as destination:
-        destination.write(source_code)
-
-
-def copy_params_to_utils(global_path, default_param_path='utils/globals.py'):
-    global RESULT_DIR
-    if (global_path != default_param_path):
-        copy_file(global_path, default_param_path)
-        file_name = global_path.rfind('/')
-        RESULT_DIR = global_path[:file_name]
-
-# used only for testing purpose with small grid size
-def create_csv_of_properties(ca_properties):
-    grid_states = ca_properties["grid_states"]
-    cell_states = ca_properties["cell_states"]
-    new_grid_states = []
-    for i in range(len(grid_states)):
-
-        cell_state = cell_states[i]
-        grid_state = grid_states[i]
-        mask = (cell_state == 'd') | (cell_state == 'q')
-        grid_state[mask] = -1
-        new_grid_states.append(grid_state)
-    ca_properties["grid_states"] = new_grid_states
-    df = pd.DataFrame(ca_properties)
-    df.to_csv("ca_properties.csv", index=False)
-
-
-def start_process(global_location):
+def start_process():
     start_datetime = datetime.now()
     print('STARTED APPLICATION AT: ', start_datetime)
-
-    default_param_path = 'utils/globals.py'
-    copy_params_to_utils(global_location, default_param_path)
-    importlib.reload(globals)
-    # Set default parameters
-    params = set_default_parameters()
+    params = set_default_parameters() # Set default parameters
     create_needed_folders(params)
-    # print(params)
-
-    # Run CA
-    ca_properties = run_ca(params)
-    # create_csv_of_properties(ca_properties)
-
-    # Save numpy values of properties
-    # np.savez(f'{params["metadata_dir"]}/cell_states.npz', *ca_properties['cell_states'])
-    # np.savez(f'{params["metadata_dir"]}/cell_ages.npz', *ca_properties['cell_ages'])
-    # np.savez(f'{params["metadata_dir"]}/cell_rules.npz', *ca_properties['cell_rules'])
-    # np.savez(f'{params["metadata_dir"]}/grid_states.npz', *ca_properties['grid_states'])
-    # np.savez(f'{params["metadata_dir"]}/cell_energy.npz', *ca_properties['cell_energy'])
-
-    # Save parameters
-    copy_file(default_param_path, f'{params["metadata_dir"]}/parameters.py')
-
-    # Create and Save Plots and Animations
-    analysed_results = analyse.process_data_needed_for_plot(
-        ca_properties, params['plot_dir'])
-    analysed_results['iteration'] = params['iteration']
-
-    directories = animation.visual_result(ca_properties, params)
-
+    ca_properties = run_ca(params) # Run CA
+    visualisation.visual_result(ca_properties, params)
     end_datetime = datetime.now()
     print('ENDED APPLICATION AT: ', end_datetime)
     print('Total Time Taken',  end_datetime - start_datetime)
     print("COMPLETE")
-    return params['exp_result_dir'], analysed_results
-
 
 if __name__ == "__main__":
-    default_param_path = 'utils/globals.py'
-    parser = argparse.ArgumentParser()
-    parser.add_argument('global_path', nargs='?', type=str, default=default_param_path,
-                        help='Path of globals where there are all parameters')
-    global_path = parser.parse_args().global_path
-    start_process(global_path)
+    start_process()

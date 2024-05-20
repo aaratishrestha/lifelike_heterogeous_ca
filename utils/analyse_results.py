@@ -3,12 +3,6 @@ import pandas as pd
 from scipy.stats import entropy
 import matplotlib.pyplot as plt
 import pandas as pd
-import os
-from utils import globals
-
-
-linewidth = 0.3
-
 
 def cell_states_count(cell_states_list: list):
     alive_count_list = []
@@ -272,17 +266,17 @@ def each_exp_set_cell_state_count(alive_cell_count: list,
 
     plt.figure()
     plt.plot(x, alive_mean, color='darkgreen',
-             linewidth=linewidth, label='Alive Cell Count')
+              label='Alive Cell Count')
     plt.fill_between(x, alive_mean, alive_mean + alive_std, color='lightgreen')
     plt.fill_between(x, alive_mean, alive_mean - alive_std, color='lightgreen')
 
     plt.plot(x, decay_mean, color='orange',
-             linewidth=linewidth, label='Decay Cell Count')
+              label='Decay Cell Count')
     plt.fill_between(x, decay_mean, decay_mean + decay_std, color='#FFDAB9')
     plt.fill_between(x, decay_mean, decay_mean - decay_std, color='#FFDAB9')
 
     plt.plot(x, dead_mean, color='black',
-             linewidth=linewidth, label='Dead Cell Count')
+              label='Dead Cell Count')
     plt.fill_between(x, dead_mean, dead_mean + dead_std, color=(0, 0, 0, 0.3))
     plt.fill_between(x, dead_mean, dead_mean - dead_std, color=(0, 0, 0, 0.3))
 
@@ -309,7 +303,7 @@ def each_exp_set_visualize_cumulative_rule(cumulative_rule_count: list,
     rule_std = np.std(cumulative_rule_count, axis=0)
 
     plt.figure()
-    plt.plot(x, rule_mean, color='blue', linewidth=linewidth,
+    plt.plot(x, rule_mean, color='blue',
              label='Cumulative Unique Rules')
     plt.fill_between(x, rule_mean, rule_mean + rule_std, color='lightblue')
     plt.fill_between(x, rule_mean, rule_mean - rule_std, color='lightblue')
@@ -322,7 +316,6 @@ def each_exp_set_visualize_cumulative_rule(cumulative_rule_count: list,
 
     plt.legend()
     plt.savefig(f'{plot_path}/cummulative_unique_rules.pdf')
-    # plt.savefig(f'{plot_path}/cummulative_unique_rules.jpg')
     plt.close()
     return plt
 
@@ -339,7 +332,7 @@ def each_exp_set_visualize_cumulative_rule1(cumulative_rule_count: list,
     rule_std = np.std(cumulative_rule_count, axis=0)
 
     plt.figure()
-    plt.plot(x, rule_mean, color='blue', linewidth=linewidth,
+    plt.plot(x, rule_mean, color='blue',
              label='Cumulative Unique Rules')
     plt.fill_between(x, rule_mean, rule_mean + rule_std, color='lightblue')
     plt.fill_between(x, rule_mean, rule_mean - rule_std, color='lightblue')
@@ -374,21 +367,21 @@ def each_exp_set_visualize_grid_state(count_alive_0: list,
 
     plt.figure()
     plt.plot(x, alive_1_mean, color='darkgreen',
-             linewidth=linewidth, label='Alive Cell Count')
+              label='Alive Cell Count')
     plt.fill_between(x, alive_1_mean, alive_1_mean +
                      alive_1_std, color='lightgreen')
     plt.fill_between(x, alive_1_mean, alive_1_mean -
                      alive_1_std, color='lightgreen')
 
     plt.plot(x, alive_0_mean, color='darkred',
-             linewidth=linewidth, label='Decay Cell Count')
+              label='Decay Cell Count')
     plt.fill_between(x, alive_0_mean, alive_0_mean +
                      alive_0_std, color=(1, 0.5, 0.5, 0.5))
     plt.fill_between(x, alive_0_mean, alive_0_mean -
                      alive_0_std, color=(1, 0.5, 0.5, 0.5))
 
     plt.plot(x, dead_mean, color='black',
-             linewidth=linewidth, label='Dead Cell Count')
+              label='Dead Cell Count')
     plt.fill_between(x, dead_mean, dead_mean + dead_std, color=(0, 0, 0, 0.3))
     plt.fill_between(x, dead_mean, dead_mean - dead_std, color=(0, 0, 0, 0.3))
 
@@ -400,7 +393,6 @@ def each_exp_set_visualize_grid_state(count_alive_0: list,
         f'Count Alive(0 and 1) and dead cell of Grid State \n{experiment_name}')
     plt.legend()
     plt.savefig(f'{plot_path}/grid_state_count_alive_1_0_dead_counts.pdf')
-    # plt.savefig(f'{plot_path}/grid_state_count_alive_1_0_dead_counts.jpg')
     plt.close()
 
 
@@ -418,7 +410,7 @@ def each_exp_set_visualize_grid_difference(grid_difference: list,
 
     plt.figure()
     plt.plot(x, grid_diff_mean, color='darkgreen',
-             linewidth=linewidth, label='Grid state movement')
+              label='Grid state movement')
     plt.fill_between(x, grid_diff_mean, grid_diff_mean +
                      grid_diff_std, color='lightgreen')
     plt.fill_between(x, grid_diff_mean, grid_diff_mean -
@@ -432,7 +424,6 @@ def each_exp_set_visualize_grid_difference(grid_difference: list,
         f'Grid State Movement \n{experiment_name}')
     plt.legend()
     plt.savefig(f'{plot_path}/grid_state_movements.pdf')
-    # plt.savefig(f'{plot_path}/grid_state_movements.jpg')
     plt.close()
     return plt
 
