@@ -9,7 +9,7 @@ tests/
 analyse_results/
 experiments/without_energy/.DS_Store
 experiments/without_energy/500*500_1K/.DS_Store
-*.DS_Store
-*.DS_Store*
-.DS_Store*
+*/.DS_Store
+*/.DS_Store/*
+.DS_Store/*
 
